@@ -24,36 +24,36 @@ class Extractor:
             return pdftotext.PDF(f, password)
 
     @classmethod
-    def _sanitize_boleto_number(cls, boleto_number: str) -> str:
+    def _sanitize_barcode(cls, barcode: str) -> str:
         """
         Remove boleto's dots.
         Desired output: 00000 00000 00000 000000 00000 000000 0 00000000000000
-        :param boleto_number: Extracted boleto's number
+        :param barcode: Extracted boleto's number
         :return: Sanitized boleto number
         """
-        return boleto_number.replace('.', ' ')
+        return barcode.replace('.', ' ')
 
-    def extract_boleto_number(self) -> str:
+    def extract_barcode(self) -> str:
         """
         Find and returns boleto's number from a PDF represented by str.
         :return: Boleto's number
         """
-        boleto_number_pattern = r'\d{5}[\.|\s]{1}\d{5}\s\d{5}[\.|\s]{1}\d{6}\s\d{5}[\.|\s]{1}\d{6}\s\d\s\d{14}'
-        regex = re.compile(pattern=boleto_number_pattern)
+        barcode_pattern = r'\d{5}[\.|\s]{1}\d{5}\s\d{5}[\.|\s]{1}\d{6}\s\d{5}[\.|\s]{1}\d{6}\s\d\s\d{14}'
+        regex = re.compile(pattern=barcode_pattern)
 
         for page in self.pdf:
             result = regex.search(page)
             if result:
-                return self._sanitize_boleto_number(result.group())
+                return self._sanitize_barcode(result.group())
 
-    def extract_bank_code(self, boleto_number: str) -> str:
+    def extract_bank_code(self, barcode: str) -> str:
         """
         Extract bank code from boleto's number.
         Bank code is the first three digits.
-        :param boleto_number: Extracted boleto's number
+        :param barcode: Extracted boleto's number
         :return: Bank code
         """
-        return boleto_number[:3]
+        return barcode[:3]
 
     def extract_bank(self, bank_code: str) -> str:
         """
@@ -68,10 +68,10 @@ class Extractor:
         Extract all data from boleto.
         :return: dict with all extracted data
         """
-        boleto_number = self.extract_boleto_number()
-        bank_code = self.extract_bank_code(boleto_number)
+        barcode = self.extract_barcode()
+        bank_code = self.extract_bank_code(barcode)
         return {
-            'boleto_number': self.extract_boleto_number(),
+            'barcode': self.extract_barcode(),
             'bank_code': bank_code,
             'bank': self.extract_bank(bank_code),
         }

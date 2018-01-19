@@ -21,7 +21,7 @@ extractor = Extractor(filepath='/home/user/boleto.pdf')
 print(extractor.extract_all())
 
 {
-    'boleto_number': '03399 63290 64000 000006 00125 201020 4 56140000017832', 
+    'barcode': '03399 63290 64000 000006 00125 201020 4 56140000017832', 
     'bank_code': '033',
     'bank': 'Banco Santander (Brasil) S.A.'
 }
