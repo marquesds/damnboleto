@@ -5,5 +5,7 @@ __pycache__/
 .coverage
 build
 dist
-damnboleto.egg-info
+*.egg
+*.egg-info
 .DS_Store
+.pypirc
