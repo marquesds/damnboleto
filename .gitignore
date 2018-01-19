@@ -1,0 +1,9 @@
+*.py[cod]
+__pycache__/
+.venv
+.idea
+.coverage
+build
+dist
+damnboleto.egg-info
+.DS_Store

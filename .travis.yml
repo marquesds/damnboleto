@@ -1,0 +1,19 @@
+language: python
+
+python:
+  - "3.5"
+  - "3.6"
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y build-essential libpoppler-cpp-dev pkg-config python3-dev
+
+install:
+  - pip install -r requirements-dev.txt
+
+script:
+  - nosetests --with-coverage --cover-package=damnboleto
+
+after_success:
+  - coverage report
+  - coveralls
