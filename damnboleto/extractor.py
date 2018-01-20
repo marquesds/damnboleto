@@ -4,6 +4,8 @@ import re
 from damnboleto.constants import bank_codes
 from datetime import datetime, timedelta
 
+from damnboleto.exceptions import BarcodeNotFound
+
 
 class Extractor:
     """
@@ -47,6 +49,8 @@ class Extractor:
             result = regex.search(page)
             if result:
                 return self._sanitize_barcode(result.group())
+        else:
+            raise BarcodeNotFound('Could not find any valid barcode in document.')
 
     def extract_bank_code(self) -> str:
         """
@@ -68,8 +72,8 @@ class Extractor:
         Return boleto's total amount to be paid.
         :return: Total amount
         """
-        amount = int(self._barcode.split('0')[-1])
-        amount = amount / 100
+        last_section = self._barcode.split(' ')[-1]
+        amount = int(last_section[4:]) / 100
         return amount
 
     def extract_due_date(self, date_format='%Y-%m-%d') -> str:
@@ -79,7 +83,7 @@ class Extractor:
         """
         base_date = datetime(1997, 7, 10)  # acoording to http://bit.ly/2Djnh8B
         due_date_factor = self._barcode.split(' ')[-1]
-        due_date_factor = int(due_date_factor.split('0')[0])
+        due_date_factor = int(due_date_factor[:4])
         return (base_date + timedelta(days=due_date_factor)).strftime(date_format)
 
     def extract_all(self) -> dict:

@@ -1,0 +1,2 @@
+class BarcodeNotFound(Exception):
+    pass
