@@ -1,7 +1,8 @@
 import pdftotext
 import re
 
-from damnboleto.banks import bank_codes
+from damnboleto.constants import bank_codes
+from datetime import datetime, timedelta
 
 
 class Extractor:
@@ -11,6 +12,7 @@ class Extractor:
 
     def __init__(self, filepath: str, password=''):
         self.pdf = self._load_file(filepath=filepath, password=password)
+        self._barcode = self.extract_barcode()
 
     @classmethod
     def _load_file(cls, filepath: str, password: str) -> pdftotext.PDF:
@@ -46,32 +48,49 @@ class Extractor:
             if result:
                 return self._sanitize_barcode(result.group())
 
-    def extract_bank_code(self, barcode: str) -> str:
+    def extract_bank_code(self) -> str:
         """
         Extract bank code from boleto's number.
         Bank code is the first three digits.
-        :param barcode: Extracted boleto's number
         :return: Bank code
         """
-        return barcode[:3]
+        return self._barcode[:3]
 
-    def extract_bank(self, bank_code: str) -> str:
+    def extract_bank(self) -> str:
         """
         Find and returns bank related to extracted bank code.
-        :param bank_code: Extracted bank code
         :return: Bank's name
         """
-        return bank_codes.get(bank_code, 'Banco não encontrado.')
+        return bank_codes.get(self._barcode[:3], 'Banco não encontrado.')
+
+    def extract_amount(self) -> float:
+        """
+        Return boleto's total amount to be paid.
+        :return: Total amount
+        """
+        amount = int(self._barcode.split('0')[-1])
+        amount = amount / 100
+        return amount
+
+    def extract_due_date(self, date_format='%Y-%m-%d') -> str:
+        """
+        Calculate boleto's due date.
+        :return: Sum of base date plus due date factor days
+        """
+        base_date = datetime(1997, 7, 10)  # acoording to http://bit.ly/2Djnh8B
+        due_date_factor = self._barcode.split(' ')[-1]
+        due_date_factor = int(due_date_factor.split('0')[0])
+        return (base_date + timedelta(days=due_date_factor)).strftime(date_format)
 
     def extract_all(self) -> dict:
         """
         Extract all data from boleto.
         :return: dict with all extracted data
         """
-        barcode = self.extract_barcode()
-        bank_code = self.extract_bank_code(barcode)
         return {
-            'barcode': self.extract_barcode(),
-            'bank_code': bank_code,
-            'bank': self.extract_bank(bank_code),
+            'barcode': self._barcode,
+            'bank_code': self.extract_bank_code(),
+            'bank': self.extract_bank(),
+            'amount': self.extract_amount(),
+            'due_date': self.extract_due_date()
         }

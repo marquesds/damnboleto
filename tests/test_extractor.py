@@ -31,19 +31,29 @@ class ExtractorTestCase(unittest.TestCase):
         filepath = '{}/{}'.format(self.assets_dir, 'santander.pdf')
         extractor = Extractor(filepath=filepath)
 
-        barcode = '03399 63290 64000 000006 00125 201020 4 56140000017832'
         expected = '033'
-
-        self.assertEqual(expected, extractor.extract_bank_code(barcode))
+        self.assertEqual(expected, extractor.extract_bank_code())
 
     def test_extract_bank(self):
         filepath = '{}/{}'.format(self.assets_dir, 'santander.pdf')
         extractor = Extractor(filepath=filepath)
-        bank_code = '033'
 
         expected = 'Banco Santander (Brasil) S.A.'
+        self.assertEqual(expected, extractor.extract_bank())
 
-        self.assertEqual(expected, extractor.extract_bank(bank_code))
+    def test_extract_boleto_amount(self):
+        filepath = '{}/{}'.format(self.assets_dir, 'santander.pdf')
+        extractor = Extractor(filepath=filepath)
+
+        expected = 178.32
+        self.assertEqual(expected, extractor.extract_amount())
+
+    def test_extract_due_date(self):
+        filepath = '{}/{}'.format(self.assets_dir, 'santander.pdf')
+        extractor = Extractor(filepath=filepath)
+
+        expected = '2012-11-22'
+        self.assertEqual(expected, extractor.extract_due_date())
 
     def test_extract_all(self):
         filepath = '{}/{}'.format(self.assets_dir, 'santander.pdf')
@@ -52,7 +62,9 @@ class ExtractorTestCase(unittest.TestCase):
         expected = {
             'barcode': '03399 63290 64000 000006 00125 201020 4 56140000017832',
             'bank_code': '033',
-            'bank': 'Banco Santander (Brasil) S.A.'
+            'bank': 'Banco Santander (Brasil) S.A.',
+            'amount': 178.32,
+            'due_date': '2012-11-22'
         }
 
         self.assertDictEqual(expected, extractor.extract_all())
