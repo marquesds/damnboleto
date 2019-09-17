@@ -58,7 +58,7 @@ bank_codes = {
     '184': 'Banco Itaú BBA S.A.',
     '204': 'Banco Bradesco Cartões S.A.',
     '208': 'Banco BTG Pactual S.A.',
-    '212': 'Banco Matone S.A.',
+    '212': 'Banco Original S.A.',
     '213': 'Banco Arbi S.A.',
     '214': 'Banco Dibens S.A.',
     '215': 'Banco Comercial e de Investimento Sudameris S.A.',
