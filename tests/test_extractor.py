@@ -66,7 +66,7 @@ class ExtractorTestCase(unittest.TestCase):
         filepath = '{}/{}'.format(self.assets_dir, 'santander.pdf')
         extractor = Extractor(filepath=filepath)
 
-        expected = '2012-11-22'
+        expected = '2013-02-19'
         self.assertEqual(expected, extractor.extract_due_date())
 
     def test_extract_due_date_with_zeros(self):
@@ -74,7 +74,7 @@ class ExtractorTestCase(unittest.TestCase):
         extractor = Extractor(filepath=filepath)
         extractor._barcode = '31890 00106 00114 285000 00202 067625 1 73600000042698'
 
-        expected = '2017-09-03'
+        expected = '2017-12-01'
         self.assertEqual(expected, extractor.extract_due_date())
 
     def test_extract_all(self):
@@ -86,7 +86,7 @@ class ExtractorTestCase(unittest.TestCase):
             'bank_code': '033',
             'bank': 'Banco Santander (Brasil) S.A.',
             'amount': 178.32,
-            'due_date': '2012-11-22'
+            'due_date': '2013-02-19'
         }
 
         self.assertDictEqual(expected, extractor.extract_all())
