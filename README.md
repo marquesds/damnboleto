@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/marquesds/damnboleto.svg?branch=master)](https://travis-ci.org/marquesds/damnboleto)
 
-<img src="https://i.imgflip.com/1mj0kf.jpg">
-
 ## Instalação
 
 ```
