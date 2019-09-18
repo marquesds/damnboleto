@@ -13,7 +13,7 @@ dependencies = [
 
 setup(
     name='damnboleto',
-    version='0.3.0',
+    version='0.3.1',
     description='Extract boleto\'s data',
     classifiers=[
         'Programming Language :: Python :: 3.6'
@@ -21,7 +21,7 @@ setup(
     author='Lucas Marques',
     author_email='lucasmarquesds@gmail.com',
     url='https://github.com/marquesds/damnboleto',
-    download_url='https://github.com/marquesds/damnboleto/archive/0.3.0.zip',
+    download_url='https://github.com/marquesds/damnboleto/archive/0.3.1.zip',
     keywords=['boleto', 'extractor', 'pdf'],
     packages=find_packages(),
     include_package_data=True,
