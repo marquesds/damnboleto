@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 
 requires = [
-    'pdftotext==2.1.12'
+    'pdftotext==2.1.2'
 ]
 
 dependencies = [
