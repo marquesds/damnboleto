@@ -28,17 +28,13 @@ print(extractor.extract_all())
     'due_date': '2012-11-22'
 }
 ```
-## Mantenedores
-
-- Lucas Marques (@<a href="https://twitter.com/lmarquesds">lmarquesds</a>)
-- Lucas Barroso (@<a href="https://twitter.com/LucasFlaneur">LucasFlaneur</a>)
 
 
 ## Licença
 
 MIT License
 
-Copyright (c) 2019
+Copyright (c) 2019 @marquesds
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
