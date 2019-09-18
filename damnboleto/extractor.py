@@ -81,7 +81,7 @@ class Extractor:
         Calculate boleto's due date.
         :return: Sum of base date plus due date factor days
         """
-        base_date = datetime(1997, 7, 10)  # acoording to http://bit.ly/2Djnh8B
+        base_date = datetime(1997, 10, 7)  # acoording to http://bit.ly/2Djnh8B
         due_date_factor = self._barcode.split(' ')[-1]
         due_date_factor = int(due_date_factor[:4])
         return (base_date + timedelta(days=due_date_factor)).strftime(date_format)
